@@ -23,6 +23,40 @@ npm start
 * In de index.html zie je dat https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js met een script tag wordt ingeladen. Dit zorgt ervoor dat we spraakgestuurd kunnen gaan zoeken.
 * Op [https://github.com/TalAter/annyang](https://github.com/TalAter/annyang) en [https://github.com/TalAter/annyang/blob/master/docs/README.md](https://github.com/TalAter/annyang/blob/master/docs/README.md) is te zien hoe je deze library kunt gebruiken.
 * Voeg de volgende code onderaan je **index.html** toe:
+```
+<script>
+    require([
+        "esri/map",
+        "dojo/domReady!"
+    ], function(Map) {
+        var map = new Map("map", {
+            center: [6.56, 53.2193836],
+            zoom: 8,
+            basemap: "streets"
+        });
+    });
+
++    if(annyang) {
++        function search(searchTerm) {
++            console.log(searchTerm); 
++        };
++        
++        var commands = {
++            '*searchTerm': function(searchTerm) {
++                search(searchTerm);
++            }
++        };
++
++        annyang.addCommands(commands);
++        annyang.setLanguage('nl-NL');
++
++        annyang.start();
++        console.log('started');
++    }
+
+</script>
+```
+
 ```javascript
 if(annyang) {
     function search(searchTerm) {
