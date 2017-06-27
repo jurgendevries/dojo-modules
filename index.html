@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+    <head>
+        <title>dojo modules</title>
+    </head>
+    <body>
+        <link rel="stylesheet" href="https://js.arcgis.com/3.20/esri/css/esri.css">
+        <link rel="stylesheet" href="style.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+        <script>
+            dojoConfig = {
+                async: true,
+                packages: [
+                    {
+                        name: 'app',
+                        location: location.pathname.replace(/\/[^/]+$/, '') + 'js/app'
+                    }
+                ]
+            };
+        </script>
+        <script src="https://js.arcgis.com/3.20/"></script>
+        
+        <script>
+            require([
+                "esri/map",
+                "dojo/domReady!"
+            ], function(Map) {
+                var map = new Map("map", {
+                    center: [-53, -6.56],
+                    zoom: 8,
+                    basemap: "topo"
+                });
+            });
+
+        </script>
+        <div id="map"></div>
+</html>
