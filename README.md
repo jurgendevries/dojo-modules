@@ -22,59 +22,36 @@ npm start
 ## Toevoegen zoekfunctionaliteit
 * In de index.html zie je dat https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js met een script tag wordt ingeladen. Dit zorgt ervoor dat we spraakgestuurd kunnen gaan zoeken.
 * Op [https://github.com/TalAter/annyang](https://github.com/TalAter/annyang) en [https://github.com/TalAter/annyang/blob/master/docs/README.md](https://github.com/TalAter/annyang/blob/master/docs/README.md) is te zien hoe je deze library kunt gebruiken.
-* Voeg de volgende code onderaan je **index.html** toe:
-```
-<script>
-    require([
-        "esri/map",
-        "dojo/domReady!"
-    ], function(Map) {
-        var map = new Map("map", {
-            center: [6.56, 53.2193836],
-            zoom: 8,
-            basemap: "streets"
-        });
+* Voeg de volgende code onderaan de laatste script tag in **index.html** toe:
+```diff
+require([
+    "esri/map",
+    "dojo/domReady!"
+], function(Map) {
+    var map = new Map("map", {
+        center: [6.56, 53.2193836],
+        zoom: 8,
+        basemap: "streets"
     });
 
-+    if(annyang) {
-+        function search(searchTerm) {
-+            console.log(searchTerm); 
-+        };
++   if(annyang) {
++       function search(searchTerm) {
++           console.log(searchTerm); 
++       };
 +        
-+        var commands = {
-+            '*searchTerm': function(searchTerm) {
-+                search(searchTerm);
-+            }
-+        };
++       var commands = {
++           '*searchTerm': function(searchTerm) {
++               search(searchTerm);
++           }
++       };
 +
-+        annyang.addCommands(commands);
-+        annyang.setLanguage('nl-NL');
++       annyang.addCommands(commands);
++       annyang.setLanguage('nl-NL');
 +
-+        annyang.start();
-+        console.log('started');
-+    }
-
-</script>
-```
-
-```javascript
-if(annyang) {
-    function search(searchTerm) {
-        console.log(searchTerm); 
-    };
-    
-    var commands = {
-        '*searchTerm': function(searchTerm) {
-            search(searchTerm);
-        }
-    };
-
-    annyang.addCommands(commands);
-    annyang.setLanguage('nl-NL');
-
-    annyang.start();
-    console.log('started');
-}
++       annyang.start();
++       console.log('started');
++   }
+});
 ```
 * Wanneer de annyang library goed ingeladen is en dus beschikbaar is, wordt de code uitgevoerd.
   * Eerst maken we een functie aan.
@@ -84,3 +61,53 @@ if(annyang) {
   * En als laatste wordt Annyang gestart.
 
 * De applicatie wordt na elk opgeslagen bestand automatisch opnieuw geladen. Wanneer je nu naar [http://localhost:3000/](http://localhost:3000/) zie je dat de applicatie vraagt om gebruik van je microfoon te maken, accepteer de melding. Als het goed is zie je in de console (F12) nu de tekst 'started' staan en staat er een rood bolletje in je tabblad (Werkt het niet probeer dan de applicatie in Chrome te openen).
+* Probeer de applicatie uit en kijk of de tekst in je console tevoorschijn komt.
+* We voegen nu de zoek functionaliteit toe. Dit doen we zonder interface aan de voorkant omdat we die in dit geval niet nodig hebben. Voeg de volgende code toe aan je **index.html**:
+```diff
+require([
+    "esri/map",
++    "esri/dijit/Search",
+    "dojo/domReady!"
++], function(Map, Search) {
+    var map = new Map("map", {
+        center: [6.56, 53.2193836],
+        zoom: 8,
+        basemap: "streets"
+    });
+
++    var searchWidget = new Search({
++        enableLabel: true,
++        enableInfoWindow: false,
++        map: map
++    }, "");
++    searchWidget.startup();
+
+    if(annyang) {
+        function search(searchTerm) {
+            console.log(searchTerm);
++            searchWidget.search(searchTerm);
+        };
+        
+        var commands = {
+            '*searchTerm': function(searchTerm) {
+                search(searchTerm);
+            }
+        };
+
+        annyang.addCommands(commands);
+        annyang.setLanguage('nl-NL');
+
+        annyang.start();
+        console.log('started');
+    }
+});
+``` 
+* Als je de applicatie nu bekijkt en een zoek actie inspreekt zou er bij een resultaat ingezoomed moeten worden op die locatie.
+* Je kunt ook testen of het werkt door in de console het commando annyang.trigger('Groningen') te typen.
+
+# Opsplitsen in modules
+* De bedoeling is nu dat je deze applicatie gaat opsplitsen in modules. Denk bijvoorbeeld aan een module waar Annyang opgezet wordt, een module waar de zoekwidget op spraak in opgezet wordt en een module die de map opzet en de spraakgestuurde zoekwidget inlaad. Een voordeel hiervan is dat je de spraak module kan hergebruiken voor andere widgets
+
+* Hints...
+
+
