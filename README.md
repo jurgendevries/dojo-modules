@@ -109,5 +109,13 @@ require([
 * De bedoeling is nu dat je deze applicatie gaat opsplitsen in modules. Denk bijvoorbeeld aan een module waar Annyang opgezet wordt, een module waar de zoekwidget op spraak in opgezet wordt en een module die de map opzet en de spraakgestuurde zoekwidget inlaad. Een voordeel hiervan is dat je de spraak module kan hergebruiken voor andere widgets
 
 * Hints...
+  * De module die de map inlaad kan een simpele module worden. Je kunt daarbij de bestaande code in een apart bestand zetten.
+  * De module voor de zoek widget kan een klas worden waar je het map element aan meegeeft om hier een instantie van te maken.
+  * Om de spraak module te kunnen hergebruiken wil je de commando's niet binnen de module zelf bepalen maar deze meegeven vanuit de module die gebruik maakt van de spraak module. In dit geval de spraakgestuurde zoek widget. 
+  * Kijk op [https://dojotoolkit.org/documentation/tutorials/1.10/modules/](https://dojotoolkit.org/documentation/tutorials/1.10/modules/) en [https://dojotoolkit.org/documentation/tutorials/1.10/modules_advanced/index.html](https://dojotoolkit.org/documentation/tutorials/1.10/modules_advanced/index.html) om voorbeelden van modules / classes te bekijken.
+# Bonus
+* Mocht je er aan toe komen, bedenk dan nog een widget die je spraak gestuurd kan maken en maak hier een nieuwe module voor.
+
+# Mocht je er echt niet uit komen...
 
 
