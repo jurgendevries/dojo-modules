@@ -16,4 +16,4 @@ npm install
 ```
 npm start
 ```
-7. Je hebt nu een draaiende applicatie die een map toont van Groningen.
+7. Je hebt nu een draaiende applicatie die een map toont van Groningen. Ga naar [http://localhost:3000/](http://localhost:3000/) om de applicatie te tonen.
